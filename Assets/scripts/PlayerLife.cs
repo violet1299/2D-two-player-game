@@ -1,0 +1,34 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayerLife : MonoBehaviour
+{
+    private Rigidbody2D rb;
+ 
+    private Animator anim;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+       
+        anim = GetComponent<Animator>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("trap"))
+        {
+            Die();
+        }
+    }
+    private void Die()
+    {
+        rb.bodyType = RigidbodyType2D.Static;
+        anim.SetTrigger("dead");
+    }
+    private void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+   
+}
